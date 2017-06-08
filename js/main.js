@@ -25,6 +25,19 @@ for (var i = 0; i < 15; i++) {
 
 
 
+// make game board responsive
+
+var tileGame = document.getElementById("tile-game");
+
+var keepAspectRatio = function() {
+	var width = tileGame.offsetWidth;
+	tileGame.style.height = width + "px";
+};
+
+keepAspectRatio();
+
+
+
 // create empty tile
 
 var emptyTile = {
@@ -52,6 +65,7 @@ var moveLeft = function() {
 			tiles[15].x++
 		};
 	};
+	checkForWin();
 };
 
 var moveRight = function() {
@@ -67,6 +81,7 @@ var moveRight = function() {
 			tiles[15].x--
 		};
 	};
+	checkForWin();
 };
 
 var moveUp = function() {
@@ -82,6 +97,7 @@ var moveUp = function() {
 			tiles[15].y++
 		};
 	};
+	checkForWin();
 };
 
 var moveDown = function() {
@@ -97,6 +113,7 @@ var moveDown = function() {
 			tiles[15].y--
 		};
 	};
+	checkForWin();
 };
 
 
@@ -142,11 +159,79 @@ var shuffleBoard = function() {
 	moveUp();
 	moveUp();
 	moveUp();
+	tileGame.className = ""; // erase win messages
+	document.getElementById("game-success").style.display = "none";
+};
+
+document.getElementById("re-shuffle-button").addEventListener("click", shuffleBoard);
+
+
+
+// win script
+
+var checkForWin = function() {
+	var didIWin = 0;
+	for (var i = 0; i < tiles.length - 1; i++) {
+		if (tiles[i].x === tiles[i].origCol && tiles[i].y === tiles[i].origRow) {
+			didIWin++; // if tile is in original spot, tick up variable
+		};
+	};
+	if (didIWin === 15) {
+		document.getElementById("game-success").style.display = "block"; // display win message
+		tileGame.className = "success"; // push tiles together (css)
+	};
 };
 
 
 
-// adjust positioning for tile background images
+// show tile numbers when the user holds down shift
+
+
+
+
+// keydown: add class to display numbers
+// keyup: remove class to hide numbers
+
+
+
+
+document.addEventListener("keydown",function(event){
+    if (event.which === 16) {
+        document.getElementById("arena").className = "shift-pressed";
+    };
+});
+
+document.addEventListener("keyup",function(event){
+    if (event.which === 16) {
+        document.getElementById("arena").className = "";
+    };
+});
+
+
+
+
+
+// old version to put class on tile-game instead of arena
+
+// document.addEventListener("keydown",function(event){
+//     if (event.which === 16) {
+//         tileGame.className += " shift-pressed"; // extra space in case it already has .success
+//     };
+// });
+
+// document.addEventListener("keyup",function(event){
+//     if (event.which === 16) {
+//         tileGame.className = tileGame.className.replace("shift-pressed","").replace(" ","");
+//     }; // remove class and extra spaces
+// });
+
+
+
+
+
+// adjust positioning for tile background images (MOVED TO CSS)
+
+/*
 
 var setBackgroundOffsets = function() {
 	var tileWidth = tiles[0].dom.offsetWidth;
@@ -170,6 +255,8 @@ var setBackgroundOffsets = function() {
 		tiles[i].dom.setAttribute("style",backgroundClasses);
 	};
 };
+
+*/
 
 
 

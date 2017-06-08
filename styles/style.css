@@ -1,15 +1,45 @@
+body {
+	font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Open Sans","Helvetica Neue",sans-serif;
+}
 
+.wrapper {
+	max-width: 960px;
+	margin: 0 auto;
+}
 
+#instructions {
+	width: 30%;
+	float: left;
+}
 
-.tile-game {
-	height: 400px;
-	width: 400px;
-	background-color: beige;
+#arena {
+	width: 55%;
+	float: right;
+	position: relative;
+}
+
+#shift-overlay {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	background-color: white;
+	opacity: 0;
+	z-index: 5;
+}
+
+.shift-pressed #shift-overlay {
+	opacity: 0.5;
+}
+
+#tile-game {
+	height: 100%;
+	width: 100%;
 	position: relative;
 	margin: 0 auto;
 }
 
-.tile-game div {
+#tile-game div {
 	background-image: url("../img/redpanda.jpg");
 	background-size: 400% 400%;
 	position: relative;
@@ -25,6 +55,34 @@
     transition-property: left top;
     transition-duration: .3s;
     transition-timing-function: easeInOutQuart;
+}
+
+#tile-game div {
+	display: flex;
+	justify-content: center;
+	border-radius: 3px;
+}
+
+#tile-game span {
+	align-self: center;
+	display: none;
+	font-weight: bold;
+	position: relative;
+	z-index: 10;
+}
+
+.shift-pressed #tile-game span {
+	display: block;
+}
+
+#game-success {
+	display: none;
+	text-align: center;
+}
+
+button {
+	position: relative;
+	z-index: 10;
 }
 
 .row-1 {
@@ -59,94 +117,118 @@
 	left: 78%;
 }
 
+/* success positioning classes */
 
-
-
-
-/*
-.tile-game {
-	display: grid;
-	grid-template-rows: repeat(4, 1fr);
-	grid-template-columns: repeat(4, 1fr);
-	grid-row-gap: 1rem;
-	grid-column-gap: 1rem;
-	height:400px;
-	width: 400px;
+#tile-game.success div {
+	border-radius: 0;
 }
 
+#tile-game.success #cell-1 {
+	border-radius: 3px 0 0 0;
+}
+
+#tile-game.success #cell-4 {
+	border-radius: 0 3px 0 0;
+}
+
+#tile-game.success #cell-13 {
+	border-radius: 0 0 0 3px;
+}
+
+#tile-game.success #cell-12, #tile-game.success #cell-15 {
+	border-radius: 0 0 3px 0;
+}
+
+.success .row-1 {
+	top: 6%;
+}
+
+.success .row-2 {
+	top: 28%;
+}
+
+.success .row-3 {
+	top: 50%;
+}
+
+.success .row-4 {
+	top: 72%;
+}
+
+.success .column-1 {
+	left: 6%;
+}
+
+.success .column-2 {
+	left: 28%;
+}
+
+.success .column-3 {
+	left: 50%;
+}
+
+.success .column-4 {
+	left: 72%;
+}
+
+
+
 #cell-1 {
-	grid-row-start: 1;
-	grid-column-start: 1;
+	background-position: 0% 0%;
 }
 
 #cell-2 {
-	grid-row-start: 1;
-	grid-column-start: 2;
+	background-position: 33.333% 0%;
 }
 
 #cell-3 {
-	grid-row-start: 1;
-	grid-column-start: 3;
+	background-position: 66.666% 0%;
 }
 
 #cell-4 {
-	grid-row-start: 1;
-	grid-column-start: 4;
+	background-position: 100% 0%;
 }
 
 #cell-5 {
-	grid-row-start: 2;
-	grid-column-start: 1;
+	background-position: 0% 33.333%;
 }
 
 #cell-6 {
-	grid-row-start: 2;
-	grid-column-start: 2;
+	background-position: 33.333% 33.333%;
 }
 
 #cell-7 {
-	grid-row-start: 2;
-	grid-column-start: 3;
+	background-position: 66.666% 33.333%;
 }
 
 #cell-8 {
-	grid-row-start: 2;
-	grid-column-start: 4;
+	background-position: 100% 33.333%;
 }
 
 #cell-9 {
-	grid-row-start: 3;
-	grid-column-start: 1;
+	background-position: 0% 66.666%;
 }
 
 #cell-10 {
-	grid-row-start: 3;
-	grid-column-start: 2;
+	background-position: 33.333% 66.666%;
 }
 
 #cell-11 {
-	grid-row-start: 3;
-	grid-column-start: 3;
+	background-position: 66.666% 66.666%;
 }
 
 #cell-12 {
-	grid-row-start: 3;
-	grid-column-start: 4;
+	background-position: 100% 66.666%;
 }
 
 #cell-13 {
-	grid-row-start: 4;
-	grid-column-start: 1;
+	background-position: 0% 100%;
 }
 
 #cell-14 {
-	grid-row-start: 4;
-	grid-column-start: 2;
+	background-position: 33.333% 100%;
 }
 
 #cell-15 {
-	grid-row-start: 4;
-	grid-column-start: 3;
+	background-position: 66.666% 100%;
 }
-
-*/
