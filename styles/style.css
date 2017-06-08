@@ -1,5 +1,69 @@
 
 
+
+.tile-game {
+	height: 400px;
+	width: 400px;
+	background-color: beige;
+	position: relative;
+	margin: 0 auto;
+}
+
+.tile-game div {
+	background-image: url("../img/redpanda.jpg");
+	background-size: 400% 400%;
+	position: relative;
+	background-color: lightblue;
+	display: inline-block;
+	width: 22%;
+	height: 22%;
+	position: absolute;
+
+	-webkit-transition-property: left top;
+    -webkit-transition-duration: .3s;
+    -webkit-transition-timing-function: easeInOutQuart;
+    transition-property: left top;
+    transition-duration: .3s;
+    transition-timing-function: easeInOutQuart;
+}
+
+.row-1 {
+	top: 0%;
+}
+
+.row-2 {
+	top: 26%;
+}
+
+.row-3 {
+	top: 52%;
+}
+
+.row-4 {
+	top: 78%;
+}
+
+.column-1 {
+	left: 0%;
+}
+
+.column-2 {
+	left: 26%;
+}
+
+.column-3 {
+	left: 52%;
+}
+
+.column-4 {
+	left: 78%;
+}
+
+
+
+
+
+/*
 .tile-game {
 	display: grid;
 	grid-template-rows: repeat(4, 1fr);
@@ -8,10 +72,6 @@
 	grid-column-gap: 1rem;
 	height:400px;
 	width: 400px;
-}
-
-.tile-game div {
-	background-color: lightblue;
 }
 
 #cell-1 {
@@ -88,3 +148,5 @@
 	grid-row-start: 4;
 	grid-column-start: 3;
 }
+
+*/
