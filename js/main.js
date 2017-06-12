@@ -36,6 +36,8 @@ var keepAspectRatio = function() {
 
 keepAspectRatio();
 
+window.addEventListener("resize", keepAspectRatio); // adjust height on window resize
+
 
 
 // create empty tile
@@ -120,17 +122,32 @@ var moveDown = function() {
 
 // listen on the document for arrow keys and fire move functions
 
-document.addEventListener("keydown",function(event){
-    if (event.which === 37) {
+var listenToArrowKeys = function(event) {
+	if (event.which === 37) {
+		event.preventDefault();
         moveLeft();
     } else if (event.which === 38) {
+    	event.preventDefault();
         moveUp();
     } else if (event.which === 39) {
+    	event.preventDefault();
         moveRight();
     } else if (event.which === 40) {
+    	event.preventDefault();
         moveDown();
     };
-});
+};
+
+var startGame = function() {
+	shuffleBoard();
+	document.addEventListener("keydown",listenToArrowKeys);
+	document.getElementById("start-game").style.display = "none";
+	if (document.getElementById("timer-switch").checked === true) {
+		startTimer();
+	};
+};
+
+document.getElementById("start-game").addEventListener("click",startGame);
 
 
 
@@ -159,11 +176,11 @@ var shuffleBoard = function() {
 	moveUp();
 	moveUp();
 	moveUp();
-	tileGame.className = ""; // erase win messages
+	tileGame.className = ""; // erase game over states
 	document.getElementById("game-success").style.display = "none";
+	document.getElementById("game-failure").style.display = "none";
+	document.getElementById("start-game").addEventListener("click",startGame);
 };
-
-document.getElementById("re-shuffle-button").addEventListener("click", shuffleBoard);
 
 
 
@@ -179,21 +196,14 @@ var checkForWin = function() {
 	if (didIWin === 15) {
 		document.getElementById("game-success").style.display = "block"; // display win message
 		tileGame.className = "success"; // push tiles together (css)
+		document.removeEventListener("keydown",listenToArrowKeys);
+		clearInterval(gameTimer);
 	};
 };
 
 
 
 // show tile numbers when the user holds down shift
-
-
-
-
-// keydown: add class to display numbers
-// keyup: remove class to hide numbers
-
-
-
 
 document.addEventListener("keydown",function(event){
     if (event.which === 16) {
@@ -206,6 +216,81 @@ document.addEventListener("keyup",function(event){
         document.getElementById("arena").className = "";
     };
 });
+
+
+
+// game timer
+
+var timerAmount = 5; // timer amount in minutes
+var timeRemaining; // hoist
+var gameTimer;
+var minutesDom = document.getElementById("minutes");
+var secondsDom = document.getElementById("seconds");
+
+var showHideTimer = function() {
+	if (document.getElementById("timer-switch").checked === true) {
+		document.getElementById("timer").style.display = "block";
+	} else {
+		document.getElementById("timer").style.display = "none";
+	}
+};
+
+document.getElementById("timer-switch").addEventListener("change",showHideTimer);
+
+var checkForTimerEnd = function() {
+	if (timeRemaining <= 0) {
+		document.getElementById("game-failure").style.display = "block";
+		document.removeEventListener("keydown",listenToArrowKeys);
+		clearInterval(gameTimer);
+	};
+};
+
+var startTimer = function() {
+	timeRemaining = timerAmount * 60; // format to seconds
+
+	gameTimer = setInterval(function(){
+		timeRemaining--;
+		minutes = Math.floor(timeRemaining / 60);
+		seconds = timeRemaining % 60;
+		if (seconds.toString().length === 1) { // format seconds to two digits
+			seconds = "0" + seconds.toString();
+		};
+		minutesDom.textContent = minutes; // update DOM
+		secondsDom.textContent = seconds;
+		checkForTimerEnd();
+	}, 1000)
+}; // timer is called when game begins
+
+
+
+
+/* old upload image scripts
+
+document.getElementById("file-uploader").addEventListener("change",function() {
+	if (this.files && this.files[0]) {
+    	var reader = new FileReader();
+        reader.onload = imageIsLoaded;
+        reader.readAsDataURL(this.files[0]);
+    }
+});
+
+function imageIsLoaded(event) {
+    // $('img').attr('src', event.target.result);
+    // $('img').fadeIn();
+    var images = document.querySelectorAll("#tile-game div");
+    for (var i = 0; i < images.length; i++) {
+    	images[i].setAttribute("style", "background-image: url(" + event.target.result + ")");
+    };
+};
+
+*/
+
+
+
+
+
+
+
 
 
 

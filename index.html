@@ -10,11 +10,13 @@
 		<div id="instructions">
 			<h1>Tile Game</h1>
 			<h2>Instructions</h2>
-			<p>Have you played a tile game before? Reassemble the scrambled image using your arrow keys!</p>
-			<p>If you need a hint, hold the shift key to see what the order of the tiles. :)</p>
+			<p>Have you played a tile game before? Reassemble the scrambled image using your arrow keys <code>&#8592;</code> <code>&#8593;</code> <code>&#8595;</code> <code>&#8594;</code> !</p>
+			<p>If you need a hint, hold the <code>shift</code> key to see the order of the tiles.</p>
 			<p>Change image???</p>
-			<p>Timer on/off</p>
+			<input type="file" id="file-uploader"><label for="file-uploader"><span>Choose your own image!</span></label>
+			<p><input type="checkbox" id="timer-switch" checked="true"><label for="timer-switch">Timer</label></p>
 			<p>:)</p>
+			<button type="button" id="start-game">Start game &#8594;</button>
 		</div>
 		<div id="arena">
 			<div id="tile-game">
@@ -33,12 +35,14 @@
 				<div id="cell-13" class="row-4 column-1"><span>13</span></div>
 				<div id="cell-14" class="row-4 column-2"><span>14</span></div>
 				<div id="cell-15" class="row-4 column-3"><span>15</span></div>
+				<div id="full-background-image"></div>
 			</div>
 			<div id="shift-overlay"></div>
-			<button type="button" id="re-shuffle-button">Re-shuffle board</button>
+			<p id="timer"><span id="minutes">0</span>:<span id="seconds">00</span></p>
 			<p id="game-success">You win!!</p>
+			<p id="game-failure">You lose :(</p>
 		</div>
 	</div>
-<script src="js/main.js" type="text/javascript"></script>
+	<script src="js/main.js" type="text/javascript"></script>
 </body>
 </html>
