@@ -1,22 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Tile Game</title>
+	<title>Tile Game &ndash; Jackson Tenclay</title>
 	<link rel="stylesheet" type="text/css" href="styles/normalize.css">
 	<link rel="stylesheet" type="text/css" href="styles/style.css">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
 </head>
 <body>
 	<div class="wrapper">
 		<div id="instructions">
 			<h1>Tile Game</h1>
 			<h2>Instructions</h2>
-			<p>Have you played a tile game before? Reassemble the scrambled image using your arrow keys <code>&#8592;</code> <code>&#8593;</code> <code>&#8595;</code> <code>&#8594;</code> !</p>
+			<p>Have you played a tile game before? Reassemble the scrambled image using your arrow keys <code>&#8592;</code> <code>&#8593;</code> <code>&#8595;</code> <code>&#8594;</code> or by clicking the tiles!</p>
 			<p>If you need a hint, hold the <code>shift</code> key to see the order of the tiles.</p>
-			<p>Change image???</p>
-			<input type="file" id="file-uploader"><label for="file-uploader"><span>Choose your own image!</span></label>
-			<p><input type="checkbox" id="timer-switch" checked="true"><label for="timer-switch">Timer</label></p>
-			<p>:)</p>
+			<p id="options"><input type="checkbox" id="timer-switch" checked="true"><label for="timer-switch">Timer</label> ( <select id="timer-dropdown">
+  				<option>1:00</option>
+				<option>2:00</option>
+				<option>3:00</option>
+				<option>4:00</option>
+				<option selected="selected">5:00</option>
+				<option>6:00</option>
+				<option>7:00</option>
+				<option>8:00</option>
+				<option>9:00</option>
+				<option>10:00</option>
+			</select> )</p>
 			<button type="button" id="start-game">Start game &#8594;</button>
+			<button type="button" id="tile-order">See tile order</button>
+			<p id="timer"><span id="minutes">5</span><span id="colon">:</span><span id="seconds">00</span>
+				<span id="game-success">&nbsp; You win!!</span>
+				<span id="game-failure">&nbsp; You lose :(</span>
+			</p>
+			<button type="button" id="try-again">Play again</button>
 		</div>
 		<div id="arena">
 			<div id="tile-game">
@@ -38,9 +53,6 @@
 				<div id="full-background-image"></div>
 			</div>
 			<div id="shift-overlay"></div>
-			<p id="timer"><span id="minutes">0</span>:<span id="seconds">00</span></p>
-			<p id="game-success">You win!!</p>
-			<p id="game-failure">You lose :(</p>
 		</div>
 	</div>
 	<script src="js/main.js" type="text/javascript"></script>

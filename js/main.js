@@ -1,4 +1,31 @@
 
+// choose background image
+
+var randomNum = "img-" + Math.floor(Math.random() * 4 + 1); // choose random class for body
+document.body.className = randomNum;
+
+
+
+// setup function: move tile automatically if touched or clicked
+
+var autoMove = function() {
+	var thisRow = parseInt(this.className.split(" ")[0].replace("row-",""));
+	var thisCol = parseInt(this.className.split(" ")[1].replace("column-",""));
+	var openRow = tiles[15].y;
+	var openCol = tiles[15].x;
+	if (thisRow + 1 === openRow && thisCol === openCol) {
+		moveDown();
+	} else if (thisRow - 1 === openRow && thisCol === openCol) {
+		moveUp();
+	} else if (thisCol + 1 === openCol && thisRow === openRow) {
+		moveRight();
+	} else if (thisCol - 1 === openCol && thisRow === openRow) {
+		moveLeft();
+	};
+};
+
+
+
 // create tile objects
 
 var tiles = [];
@@ -142,12 +169,29 @@ var startGame = function() {
 	shuffleBoard();
 	document.addEventListener("keydown",listenToArrowKeys);
 	document.getElementById("start-game").style.display = "none";
+	document.getElementById("options").style.display = "none";
+	document.getElementById("timer").style.display = "block";
+	document.getElementById("tile-order").style.display = "block";
+	document.getElementById("try-again").style.display = "none";
 	if (document.getElementById("timer-switch").checked === true) {
 		startTimer();
+		document.getElementById("colon").style.display = "inline";
+		document.getElementById("minutes").style.display = "inline";
+		document.getElementById("seconds").style.display = "inline";
 	};
+	for (var i = 0; i < 15; i++) { // start listening to clicks
+	var domTile = document.getElementById("cell-" + (i + 1));
+	if (screen.width > 750) { // only apply click for desktop computers
+ 		tiles[i].dom.addEventListener("click",autoMove);
+	};
+	tiles[i].dom.addEventListener("touchstart",autoMove);
+};
 };
 
 document.getElementById("start-game").addEventListener("click",startGame);
+document.getElementById("try-again").addEventListener("click",function(){
+	location.reload();
+});
 
 
 
@@ -194,9 +238,14 @@ var checkForWin = function() {
 		};
 	};
 	if (didIWin === 15) {
-		document.getElementById("game-success").style.display = "block"; // display win message
+		document.getElementById("game-success").style.display = "inline"; // display win message
 		tileGame.className = "success"; // push tiles together (css)
 		document.removeEventListener("keydown",listenToArrowKeys);
+		for (var i = 0; i < 15; i++) {
+	 	 	tiles[i].dom.removeEventListener("click",autoMove);
+			tiles[i].dom.removeEventListener("touchstart",autoMove);
+		};
+		document.getElementById("try-again").style.display = "block";
 		clearInterval(gameTimer);
 	};
 };
@@ -205,16 +254,29 @@ var checkForWin = function() {
 
 // show tile numbers when the user holds down shift
 
+var shiftTimer;
+
 document.addEventListener("keydown",function(event){
     if (event.which === 16) {
         document.getElementById("arena").className = "shift-pressed";
+        shiftTimer = setTimeout(function(){
+        	document.getElementById("arena").className = "";
+        }, 5000);
     };
 });
 
 document.addEventListener("keyup",function(event){
     if (event.which === 16) {
-        document.getElementById("arena").className = "";
+		document.getElementById("arena").className = "";
+		clearTimeout(shiftTimer);
     };
+});
+
+document.getElementById("tile-order").addEventListener("click",function(event){
+    document.getElementById("arena").className = "shift-pressed";
+   	shiftTimer = setTimeout(function(){
+    	document.getElementById("arena").className = "";
+    }, 5000);
 });
 
 
@@ -236,11 +298,21 @@ var showHideTimer = function() {
 };
 
 document.getElementById("timer-switch").addEventListener("change",showHideTimer);
+document.getElementById("timer-dropdown").addEventListener("change",function(){
+	timerAmount = this.selectedIndex + 1;
+	minutesDom.textContent = this.selectedIndex + 1; // index starts at 0; add 1 to get value
+});
 
 var checkForTimerEnd = function() {
 	if (timeRemaining <= 0) {
-		document.getElementById("game-failure").style.display = "block";
+		document.getElementById("game-failure").style.display = "inline";
+		document.getElementById("try-again").style.display = "block";
+		document.getElementById("tile-order").style.display = "none";
 		document.removeEventListener("keydown",listenToArrowKeys);
+ 		for (var i = 0; i < 15; i++) {
+	 	 	tiles[i].dom.removeEventListener("click",autoMove);
+			tiles[i].dom.removeEventListener("touchstart",autoMove);
+		};
 		clearInterval(gameTimer);
 	};
 };
@@ -260,32 +332,6 @@ var startTimer = function() {
 		checkForTimerEnd();
 	}, 1000)
 }; // timer is called when game begins
-
-
-
-
-/* old upload image scripts
-
-document.getElementById("file-uploader").addEventListener("change",function() {
-	if (this.files && this.files[0]) {
-    	var reader = new FileReader();
-        reader.onload = imageIsLoaded;
-        reader.readAsDataURL(this.files[0]);
-    }
-});
-
-function imageIsLoaded(event) {
-    // $('img').attr('src', event.target.result);
-    // $('img').fadeIn();
-    var images = document.querySelectorAll("#tile-game div");
-    for (var i = 0; i < images.length; i++) {
-    	images[i].setAttribute("style", "background-image: url(" + event.target.result + ")");
-    };
-};
-
-*/
-
-
 
 
 
