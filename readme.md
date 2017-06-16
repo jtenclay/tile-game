@@ -14,10 +14,15 @@ Project #1 for General Assembly's Web Development Immersive Bootcamp.
 ## Technologies Used
 
 * HTML
-* CSS
+* CSS \(including CSS transitions\)
 * Vanilla Javascript
 
 ## Pain Points
 
 * I originally wanted to use CSS Grid but couldn't animate the tiles that way, so I moved to positioning using percentages.
 * I was hoping to let the user upload their own image, but had trouble with permanently cropping it to square via javascript (the css requires a square image).
+
+## In the Future
+
+* I think it would be nice to have the option to choose board size rather than always using a 4 x 4 board, but this would take some very serious reworking.
+* [Trello Board](https://trello.com/b/fQTKFnfI) for reference
