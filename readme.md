@@ -24,5 +24,6 @@ Project #1 for General Assembly's Web Development Immersive Bootcamp.
 
 ## In the Future
 
+* DRY up the move functions and the game beginning/end states where lots of DOM elements are hidden or displayed at once.
 * I think it would be nice to have the option to choose board size rather than always using a 4 x 4 board, but this would take some very serious reworking.
 * [Trello Board](https://trello.com/b/fQTKFnfI) for reference
